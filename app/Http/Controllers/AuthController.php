@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
-       public function login(Request $request)
+    public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
         if (!$token = Auth::attempt($credentials)) {
@@ -23,24 +24,36 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
+        $validator = Validator::make($request->all(), [
+            'mobile' => 'required|unique:users',
             'name' => 'required',
+            'username' => 'required',
+            'month' => 'required',
+            'year' => 'required',
         ]);
 
-        $user = User::create([
-            'email' => $request->email,
-            'name' => $request->name,
-            'password' => bcrypt($request->password),
-        ]);
+        if (!$validator->fails()) {
 
-        $token = JWTAuth::fromUser($user);
+            $user = User::create([
+                'mobile' => $request->mobile,
+                'name' => $request->name,
+                'username' => $request->username,
+                'dob' => $request->month."-".$request->year,
+            ]);
 
-        return response()->json([
-            'token' => $token,
-            'user' => $user
-        ]);
+            $token = JWTAuth::fromUser($user);
+
+            $data = array(
+                'success' => 1,
+                'message' => "User Register Succesfully",
+                'token' => $token,
+                'user' => $user
+            );
+        } else {
+            $data = array("success" => "0", "message" =>  $validator->errors()->first());
+        }
+
+        return response()->json($data);
     }
 
     public function logout()
