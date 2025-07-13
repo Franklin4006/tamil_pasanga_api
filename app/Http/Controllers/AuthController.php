@@ -12,14 +12,33 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
-        if (!$token = Auth::attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-        return response()->json([
-            'token' => $token,
-            'user' => Auth::user()
+
+        $validator = Validator::make($request->all(), [
+            'mobile' => 'required',
         ]);
+
+        if (!$validator->fails()) {
+
+            $mobile = $request->mobile;
+            $user = User::where('mobile', $mobile)->first();
+
+            if (!$user) {
+                return response()->json(['success' => 0, 'message' => 'Mobile number not registered']);
+            }
+
+            $token = JWTAuth::fromUser($user);
+
+            return response()->json([
+                'success' => 1,
+                'token' => $token,
+                'user' => $user
+            ]);
+
+        } else {
+            return response()->json(["success" => "0", "message" =>  $validator->errors()->first()]);
+        }
+
+
     }
 
     public function register(Request $request)
@@ -27,7 +46,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'mobile' => 'required|unique:users',
             'name' => 'required',
-            'username' => 'required',
+            'username' => 'required|unique:users',
             'month' => 'required',
             'year' => 'required',
         ]);
@@ -38,7 +57,7 @@ class AuthController extends Controller
                 'mobile' => $request->mobile,
                 'name' => $request->name,
                 'username' => $request->username,
-                'dob' => $request->month."-".$request->year,
+                'dob' => $request->year . "-" . $request->month,
             ]);
 
             $token = JWTAuth::fromUser($user);
