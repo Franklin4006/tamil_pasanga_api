@@ -31,7 +31,7 @@ class AuthController extends Controller
 
             return $this->createOTP($mobile);
         } else {
-            return response()->json(["success" => "0", "message" =>  $validator->errors()->first()]);
+            return response()->json(["success" => 0, "message" =>  $validator->errors()->first()]);
         }
     }
 
@@ -63,7 +63,7 @@ class AuthController extends Controller
                 'message' => "OTP sent Succesfully",
             );
         } else {
-            $data = array("success" => "0", "message" =>  $validator->errors()->first());
+            $data = array("success" => 0, "message" =>  $validator->errors()->first());
         }
 
         return response()->json($data);
@@ -73,7 +73,7 @@ class AuthController extends Controller
     {
         $mobile_otp = MobileOtp::where('mobile_number', $mobile)->where('expires_at', '>=', Carbon::now())->first();
         if ($mobile_otp) {
-            return array("success" => "0", "message" =>  "Please wait few seconds");
+            return array("success" => 0, "message" =>  "Please wait few seconds");
         }
 
         if (app()->environment() == 'local') {
@@ -93,7 +93,7 @@ class AuthController extends Controller
             ]
         );
 
-        return array("success" => "1", "message" =>  "OTP sent Succesfully");
+        return array("success" => 1, "message" =>  "OTP sent Succesfully");
     }
 
     public function otp_verify(Request $request)
@@ -129,7 +129,7 @@ class AuthController extends Controller
                 'token' => $token
             );
         } else {
-            $data = array("success" => "0", "message" =>  $validator->errors()->first());
+            $data = array("success" => 0, "message" =>  $validator->errors()->first());
         }
 
         return response()->json($data);
