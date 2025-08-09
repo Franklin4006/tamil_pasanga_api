@@ -11,28 +11,6 @@ class PostController extends Controller
         $data = [
             [
                 "username" => "john_doe",
-                "profile_image" => "https://i.pravatar.cc/100?img=7",
-                "caption" => "My vacation pics 🌴",
-                "time_ago" => "2h ago",
-                "media" => [
-                    ["type" => "image", "url" => "https://example.com/image1.jpg"],
-                    ["type" => "video", "url" => "https://example.com/video.mp4"],
-                    ["type" => "image", "url" => "https://example.com/image2.jpg"]
-                ]
-            ],
-            [
-                "username" => "john_doe",
-                "profile_image" => "https://i.pravatar.cc/100?img=8",
-                "caption" => "My vacation pics 🌴",
-                "time_ago" => "2h ago",
-                "media" => [
-                    ["type" => "image", "url" => "https://example.com/image1.jpg"],
-                    ["type" => "video", "url" => "https://example.com/video.mp4"],
-                    ["type" => "image", "url" => "https://example.com/image2.jpg"]
-                ]
-            ],
-            [
-                "username" => "john_doe",
                 "profile_image" => "https://i.pravatar.cc/100?img=11",
                 "caption" => "My vacation pics 🌴",
                 "time_ago" => "2h ago",
