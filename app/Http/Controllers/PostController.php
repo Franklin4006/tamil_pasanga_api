@@ -23,7 +23,7 @@ class PostController extends Controller
             [
                 "post_id" => 2,
                 "username" => "john_doe",
-                "profile_image" => url('/')."s",
+                "profile_image" => asset('/images/temp_image/profile.jpeg'),
                 "caption" => "My vacation pics 🌴",
                 "time_ago" => "2h ago",
                 "media" => [
@@ -36,7 +36,7 @@ class PostController extends Controller
             [
                 "post_id" => 3,
                 "username" => "john_doe",
-                "profile_image" => url('/')."s",
+                "profile_image" => asset('/images/temp_image/profile.jpeg'),
                 "caption" => "My vacation pics 🌴",
                 "time_ago" => "2h ago",
                 "media" => [
@@ -47,7 +47,7 @@ class PostController extends Controller
             [
                 "post_id" => 4,
                 "username" => "john_doe",
-                "profile_image" => url('/')."s",
+                "profile_image" => asset('/images/temp_image/profile.jpeg'),
                 "caption" => "My vacation pics 🌴",
                 "time_ago" => "12h ago",
                 "media" => [
