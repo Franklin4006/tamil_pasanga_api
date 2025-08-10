@@ -29,8 +29,8 @@ class PostController extends Controller
                 "media" => [
                     ["type" => "image", "url" => asset('/images/temp_image/post2.jpeg')],
                     ["type" => "image", "url" => asset('/images/temp_image/post1.jpeg')],
-                    ["type" => "video", "url" => asset('/images/temp_video/post1.jpeg')],
-                    ["type" => "video", "url" => asset('/images/temp_video/post2.jpeg')],
+                    ["type" => "video", "url" => asset('/images/temp_video/post1.mp4')],
+                    ["type" => "video", "url" => asset('/images/temp_video/post2.mp4')],
                 ]
             ],
             [
@@ -51,8 +51,8 @@ class PostController extends Controller
                 "caption" => "My vacation pics 🌴",
                 "time_ago" => "12h ago",
                 "media" => [
-                    ["type" => "video", "url" => asset('/images/temp_video/post2.jpeg')],
-                    ["type" => "video", "url" => asset('/images/temp_video/post1.jpeg')],
+                    ["type" => "video", "url" => asset('/images/temp_video/post2.mp4')],
+                    ["type" => "video", "url" => asset('/images/temp_video/post1.mp4')],
                 ]
             ],
         ];
