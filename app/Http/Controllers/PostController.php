@@ -27,9 +27,8 @@ class PostController extends Controller
                 "caption" => "My vacation pics 🌴",
                 "time_ago" => "2h ago",
                 "media" => [
+                    ["type" => "video", "url" => asset('/images/temp_video/TamilPasanga.mp4')],
                     ["type" => "image", "url" => asset('/images/temp_image/post2.jpeg')],
-                    ["type" => "image", "url" => asset('/images/temp_image/post1.jpeg')],
-                    ["type" => "video", "url" => asset('/images/temp_video/post1.mp4')],
                     ["type" => "video", "url" => asset('/images/temp_video/post2.mp4')],
                 ]
             ],
@@ -40,8 +39,7 @@ class PostController extends Controller
                 "caption" => "My vacation pics 🌴",
                 "time_ago" => "2h ago",
                 "media" => [
-                    ["type" => "image", "url" => asset('/images/temp_image/post3.jpeg')],
-                    ["type" => "image", "url" => asset('/images/temp_image/post4.jpeg')],
+                    ["type" => "video", "url" => asset('/images/temp_video/Jana_Nayagan.mp4')],
                 ]
             ],
             [
@@ -51,8 +49,10 @@ class PostController extends Controller
                 "caption" => "My vacation pics 🌴",
                 "time_ago" => "12h ago",
                 "media" => [
-                    ["type" => "video", "url" => asset('/images/temp_video/post2.mp4')],
-                    ["type" => "video", "url" => asset('/images/temp_video/post1.mp4')],
+                    ["type" => "image", "url" => asset('/images/temp_image/post3.jpeg')],
+                    ["type" => "video", "url" => asset('/images/temp_video/Jana_Nayagan.mp4')],
+                    ["type" => "video", "url" => asset('/images/temp_video/TamilPasanga.mp4')],
+                    ["type" => "image", "url" => asset('/images/temp_image/post4.jpeg')],
                 ]
             ],
         ];
