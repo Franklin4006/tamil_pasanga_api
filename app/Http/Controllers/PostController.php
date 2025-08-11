@@ -29,7 +29,7 @@ class PostController extends Controller
                 "media" => [
                     ["type" => "video", "url" => asset('/images/temp_video/TamilPasanga.mp4')],
                     ["type" => "image", "url" => asset('/images/temp_image/post2.jpeg')],
-                    ["type" => "video", "url" => asset('/images/temp_video/post2.mp4')],
+                    ["type" => "video", "url" => asset('/images/temp_video/post1.mp4')],
                 ]
             ],
             [
