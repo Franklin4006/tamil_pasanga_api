@@ -73,7 +73,7 @@ class AuthController extends Controller
     {
         $mobile_otp = MobileOtp::where('mobile_number', $mobile)->where('expires_at', '>=', Carbon::now())->first();
         if ($mobile_otp) {
-            return array("success" => 0, "message" =>  "Please wait few seconds");
+            return array("success" => 0, "message" =>  "Please wait few Minutes");
         }
 
         if (app()->environment() == 'local') {

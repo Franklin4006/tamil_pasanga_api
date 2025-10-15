@@ -27,6 +27,9 @@ Route::post('otp_verify', [AuthController::class, 'otp_verify']);
 
 Route::get('temp_post_list', [PostController::class, 'temp_post_list']);
 
+
+Route::post('create-post', [PostController::class, 'createPost']);
+
 Route::middleware('auth:api')->group(function () {
 
 
