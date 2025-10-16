@@ -106,7 +106,7 @@ class PostController extends Controller
 
             DB::commit();
 
-            return response()->json(['message' => 'Post created successfully', 'post' => $post], 201);
+            return response()->json(['message' => 'Post created successfully', 'post' => $post], 200);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['error' => 'Failed to create post', 'details' => $e->getMessage()], 500);
