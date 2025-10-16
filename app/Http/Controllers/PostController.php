@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -65,14 +66,20 @@ class PostController extends Controller
     public function createPost(Request $request)
     {
 
-        // // Step 1: Validate input
-        $validated = $request->validate([
+        $validator = Validator::make($request->all(),
+        [
             'description' => 'required|string|max:1000',
             'images' => 'array',
             'images.*' => 'file|mimes:jpg,jpeg,png,gif|max:5120', // 5MB max
             'videos' => 'array',
             'videos.*' => 'file|mimes:mp4,mov,avi|max:20480', // 20MB max
         ]);
+
+        if($validator->fails())
+        {
+            return response()->json(['message' => $validator->errors()->first()], 301);
+        }
+
 
         DB::beginTransaction();
 
