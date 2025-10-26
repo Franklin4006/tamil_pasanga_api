@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('post_files', function (Blueprint $table) {
+        Schema::create('tag_lists', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('post_id')->constrained()->onDelete('cascade');
-            $table->enum('type', ['image', 'video']);
-            $table->string('path');
+            $table->string('name');
+		    $table->integer('is_trending');
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('post_files');
+        Schema::dropIfExists('tag_lists');
     }
 };
