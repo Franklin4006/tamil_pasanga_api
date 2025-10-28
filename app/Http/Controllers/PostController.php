@@ -69,10 +69,9 @@ class PostController extends Controller
         $validator = Validator::make($request->all(),
         [
             'description' => 'required|string|max:1000',
-            'images' => 'array',
-            'images.*' => 'file|mimes:jpg,jpeg,png,gif|max:5120', // 5MB max
-            'videos' => 'array',
-            'videos.*' => 'file|mimes:mp4,mov,avi|max:20480', // 20MB max
+            'tags' => 'required',
+            'files' => 'array',
+            'files.*' => 'file|mimes:jpg,jpeg,png,gif,mp4|max:358400', // 350MB max
         ]);
 
         if($validator->fails())
@@ -84,28 +83,25 @@ class PostController extends Controller
         DB::beginTransaction();
 
         try {
-            // Step 2: Create the post
             $post = Post::create([
                 'description' => $request->description,
             ]);
 
-            // Step 4: Save images
-            if ($request->hasFile('images')) {
-                foreach ($request->file('images') as $image) {
-                    $path = $image->store('posts/images', 'public');
-                    $post->media()->create([
-                        'type' => 'image',
-                        'path' => $path,
-                    ]);
-                }
-            }
+            if ($request->hasFile('files')) {
+                foreach ($request->file('files') as $file) {
+                    $extension = strtolower($file->getClientOriginalExtension());
 
-            // Step 5: Save videos
-            if ($request->hasFile('videos')) {
-                foreach ($request->file('videos') as $video) {
-                    $path = $video->store('posts/videos', 'public');
+                    $type = '';
+                    if (in_array($extension, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
+                        $type = 'image';
+                        $path = $file->store('posts/images', 'public');
+                    } elseif (in_array($extension, ['mp4'])) {
+                        $type = 'video';
+                        $path = $file->store('posts/videos', 'public');
+                    }
+
                     $post->media()->create([
-                        'type' => 'video',
+                        'type' => $type,
                         'path' => $path,
                     ]);
                 }

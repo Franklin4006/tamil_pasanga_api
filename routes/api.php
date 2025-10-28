@@ -28,10 +28,10 @@ Route::post('otp_verify', [AuthController::class, 'otp_verify']);
 
 Route::get('fetch-tag-list', [TagController::class, 'fetchTagList']);
 
+Route::post('create-post', [PostController::class, 'createPost']);
 Route::middleware('auth:api')->group(function () {
 
     // Create Post
 
-    Route::post('create-post', [PostController::class, 'createPost']);
     Route::post('logout', [AuthController::class, 'logout']);
 });
