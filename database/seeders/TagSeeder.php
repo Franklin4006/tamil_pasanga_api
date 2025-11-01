@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\TagList;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Tag;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TagSeeder extends Seeder
@@ -24,6 +24,6 @@ class TagSeeder extends Seeder
             ['name' => 'Tag 4', 'is_trending' => 0,],
         ];
 
-        TagList::insert($data);
+        Tag::insert($data);
     }
 }

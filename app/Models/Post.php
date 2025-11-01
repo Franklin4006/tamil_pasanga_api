@@ -7,12 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    protected $fillable = ['description'];
+    protected $fillable = ['description', 'user_id', 'created_by'];
 
     use HasFactory;
 
     public function media()
-{
-    return $this->hasMany(PostFile::class); // You need a Media model
-}
+    {
+        return $this->hasMany(PostFile::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'post_tags', 'post_id', 'tag_id');
+    }
 }

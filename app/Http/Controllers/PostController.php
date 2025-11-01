@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -66,16 +67,17 @@ class PostController extends Controller
     public function createPost(Request $request)
     {
 
-        $validator = Validator::make($request->all(),
-        [
-            'description' => 'required|string|max:1000',
-            'tags' => 'required',
-            'files' => 'array',
-            'files.*' => 'file|mimes:jpg,jpeg,png,gif,mp4|max:358400', // 350MB max
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'description' => 'required|string|max:1000',
+                'tags' => 'required',
+                'files' => 'array',
+                'files.*' => 'file|mimes:jpg,jpeg,png,gif,mp4|max:358400', // 350MB max
+            ]
+        );
 
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return response()->json(['message' => $validator->errors()->first()], 301);
         }
 
@@ -83,9 +85,17 @@ class PostController extends Controller
         DB::beginTransaction();
 
         try {
+
+            $tags = $request->tags;
+            $tags_arr = explode(',', $tags);
+
             $post = Post::create([
                 'description' => $request->description,
+                'user_id' => 1,
+                'created_by' => 1
             ]);
+
+            $post->tags()->attach($tags_arr);
 
             if ($request->hasFile('files')) {
                 foreach ($request->file('files') as $file) {
@@ -100,10 +110,12 @@ class PostController extends Controller
                         $path = $file->store('posts/videos', 'public');
                     }
 
-                    $post->media()->create([
-                        'type' => $type,
-                        'path' => $path,
-                    ]);
+                    if ($type) {
+                        $post->media()->create([
+                            'type' => $type,
+                            'path' => $path,
+                        ]);
+                    }
                 }
             }
 
