@@ -66,20 +66,25 @@ class PostController extends Controller
 
     public function listPost(Request $request)
     {
-        $post = Post::with(['user', 'files'])->paginate(10);
+        try {
 
-        $data = [];
-        foreach ($post as $p) {
-            $data[] = array(
-                "post_id" => $p->id,
-                "username" => $p->user->username,
-                "profile_image" => $p->user->profile_path,
-                "caption" => $p->description,
-                "time_ago" => $p->created_time,
-                "media" => $p->files,
-            );
+            $post = Post::with(['user', 'files'])->paginate(10);
+
+            $data = [];
+            foreach ($post as $p) {
+                $data[] = array(
+                    "post_id" => $p->id,
+                    "username" => $p->user->username,
+                    "profile_image" => $p->user->profile_path,
+                    "caption" => $p->description,
+                    "time_ago" => $p->created_time,
+                    "media" => $p->files,
+                );
+            }
+            return response()->json(["success" => 1, 'message' => 'Post get successfully', 'data' => $data]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => 0, "message" => 'Failed to get post']);
         }
-        return $data;
     }
 
     public function createPost(Request $request)
@@ -139,7 +144,7 @@ class PostController extends Controller
 
             DB::commit();
 
-            return response()->json(['message' => 'Post created successfully', 'post' => $post], 200);
+            return response()->json(['message' => 'Post created successfully'], 200);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['error' => 'Failed to create post', 'details' => $e->getMessage()], 500);
