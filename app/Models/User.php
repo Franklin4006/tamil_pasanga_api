@@ -34,6 +34,6 @@ class User extends Authenticatable implements JWTSubject
 
     public function getProfilePathAttribute()
     {
-        return $this->profile ? url('storage/' . $this->profile) : url('storage/users/icons.png');
+        return $this->profile ? url('storage/' . $this->profile) : url('users/icons.png');
     }
 }
