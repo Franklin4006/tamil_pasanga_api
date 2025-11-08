@@ -9,9 +9,12 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
-
+    protected $appends = ['profile_path'];
     protected $fillable = [
-        'name', 'mobile', 'username', 'dob'
+        'name',
+        'mobile',
+        'username',
+        'dob'
     ];
 
     protected $hidden = [
@@ -27,5 +30,10 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function getProfilePathAttribute()
+    {
+        return $this->profile ? url('storage/' . $this->profile) : url('storage/users/icons.png');
     }
 }

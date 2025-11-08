@@ -64,6 +64,24 @@ class PostController extends Controller
         return $data;
     }
 
+    public function listPost(Request $request)
+    {
+        $post = Post::with(['user', 'files'])->paginate(10);
+
+        $data = [];
+        foreach ($post as $p) {
+            $data[] = array(
+                "post_id" => $p->id,
+                "username" => $p->user->username,
+                "profile_image" => $p->user->profile_path,
+                "caption" => $p->description,
+                "time_ago" => $p->created_time,
+                "media" => $p->files,
+            );
+        }
+        return $data;
+    }
+
     public function createPost(Request $request)
     {
 
