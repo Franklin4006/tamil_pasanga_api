@@ -36,5 +36,9 @@ Route::post('otp_verify', [AuthController::class, 'otp_verify']);
     // Post List
     Route::get('fetch-post-list', [PostController::class, 'listPost']);
 
+
+    Route::get('temp_post_list', [PostController::class, 'temp_post_list']);
+
+
     Route::post('logout', [AuthController::class, 'logout']);
 // });
