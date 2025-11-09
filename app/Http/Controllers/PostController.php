@@ -68,10 +68,10 @@ class PostController extends Controller
     {
         try {
 
-            $post = Post::with(['user', 'files'])->paginate(10);
+            $posts = Post::with(['user', 'files'])->paginate(10);
 
             $data = [];
-            foreach ($post as $p) {
+            foreach ($posts as $p) {
                 $data[] = array(
                     "post_id" => $p->id,
                     "username" => $p->user->username,
@@ -81,7 +81,16 @@ class PostController extends Controller
                     "media" => $p->files,
                 );
             }
-            return response()->json(["success" => 1, 'message' => 'Post get successfully', 'data' => $data]);
+
+            return response()->json([
+                "success" => 1,
+                'message' => 'Post get successfully',
+                'data' => $data,
+                "current_page" => $posts->currentPage(),
+                "last_page" => $posts->lastPage(),
+                "total" => $posts->total(),
+                "next_page_url" => $posts->nextPageUrl()
+            ]);
         } catch (\Exception $e) {
             return response()->json(['success' => 0, "message" => 'Failed to get post']);
         }
